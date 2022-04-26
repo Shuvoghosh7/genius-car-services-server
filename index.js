@@ -23,9 +23,9 @@ async function run() {
         const orderCollection = client.db('geniusCar').collection('order');
         // Auth
         app.post('/login',async(req,res)=>{
-            const user=req.body
-            const assessToken=jwt.sign(user,process.env.ACCESS_TOKEN_SECRET,{expiresIn:'id'})
-            res.send({assessToken})
+            const user=req.body;
+            const assessToken=jwt.sign(user,process.env.ACCESS_TOKEN_SECRET,{expiresIn:'1d'});
+            res.send({assessToken});
         })
 
         //load all service data
@@ -59,6 +59,8 @@ async function run() {
 
         // Order Collection Api
         app.get('/order',async(req,res)=>{
+            const authHeader=req.headers.authorization;
+            console.log(authHeader)
             const email=req.query.email
             console.log(email)
             const query = {email:email};
